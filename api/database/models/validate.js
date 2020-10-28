@@ -8,4 +8,9 @@ const schemaRegister = Joi.object({
   password: Joi.string().min(6).max(1024).required(),
 })
 
-module.exports = schemaRegister
+const schemaLogin = Joi.object({
+  cc: Joi.number().min(10000000).max(9999999999).required().integer(),
+  password: Joi.string().min(6).max(1024).required(),
+})
+
+module.exports = { schemaRegister, schemaLogin }
