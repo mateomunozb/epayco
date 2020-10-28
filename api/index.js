@@ -1,14 +1,21 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
 require('dotenv').config()
+const express = require('express')
+const bodyParser = require('body-parser')
 
+//Initializations
 const app = express()
-const PORT = process.env.PORT || 9000
+const PORT = process.env.PORT || 3001
+const authRoutes = require('./routes/auth')
+const verifyToken = require('./routes/validate-token')
+const profile = require('./routes/profile')
 
+////Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+//Routes
+app.use('/api/user', authRoutes)
+app.use('/api/profile', verifyToken, profile)
 app.get('/', (req, res) => {
   res.json({
     estado: true,
@@ -16,4 +23,5 @@ app.get('/', (req, res) => {
   })
 })
 
+//Server
 app.listen(PORT, () => console.log(`Server on port ${PORT}!`))
