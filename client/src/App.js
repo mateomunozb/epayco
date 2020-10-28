@@ -1,7 +1,14 @@
-import './App.css'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import LoginForm from './components/Loginform'
+import RegisterForm from './components/Registerform'
 
 function App() {
-  return <h1>Hola mundo</h1>
+  return (
+    <Router>
+      <Route exact path='/' component={LoginForm} />
+      <Route exact path='/register' component={RegisterForm} />
+    </Router>
+  )
 }
 
 export default App
