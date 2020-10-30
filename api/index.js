@@ -4,10 +4,14 @@ const bodyParser = require('body-parser')
 
 //Initializations
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 9000
 const authRoutes = require('./routes/auth')
 const verifyToken = require('./routes/validate-token')
 const profile = require('./routes/profile')
+
+//Cors
+const cors = require('cors')
+app.use(cors())
 
 ////Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -16,7 +20,7 @@ app.use(bodyParser.json())
 //Routes
 app.use('/api/user', authRoutes)
 app.use('/api/profile', verifyToken, profile)
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({
     estado: true,
     mensaje: 'funcional ',
