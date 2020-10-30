@@ -21,17 +21,16 @@ router.post('/login', async (req, res) => {
   const token = jwt.sign(
     {
       id: user._id,
-      name: user.name,
     },
-    process.env.TOKEN_SECRET
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: 60,
+    }
   )
 
-  res.header('auth-token', token).json({
-    error: null,
-    message: 'Welcome',
-    data: {
-      token,
-    },
+  res.json({
+    auth: true,
+    token,
   })
 })
 
@@ -59,11 +58,21 @@ router.post('/register', async (req, res) => {
     password,
   })
 
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: 60 * 60,
+    }
+  )
+
   try {
     const userDB = await user.save()
     res.json({
-      error: null,
-      data: userDB,
+      auth: true,
+      token,
     })
   } catch (error) {
     res.status(400).json(error)
