@@ -2,3 +2,7 @@
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
 }
+
+button:hover {
+  border: 1px white solid;
+}
