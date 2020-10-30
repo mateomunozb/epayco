@@ -6,17 +6,13 @@ const User = require('../database/db')
 const { schemaRegister, schemaLogin } = require('../database/models/validate')
 
 router.post('/login', async (req, res) => {
-  const { error } = schemaLogin.validate(req.body)
-
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message })
-  }
-
   const user = await User.findOne({ cc: req.body.cc })
-  if (!user) res.status(400).json({ error: true, message: 'cc does not exists' })
+  if (!user)
+    res.status(400).json({ auth: false, message: 'Número de documento o contraseña incorrectos' })
 
   const validPassword = await bcrypt.compare(req.body.password, user.password)
-  if (!validPassword) res.status(400).json({ error: true, message: 'Invalid password' })
+  if (!validPassword)
+    res.status(400).json({ auth: false, message: 'Número de documento o contraseña incorrectos' })
 
   const token = jwt.sign(
     {
@@ -37,11 +33,11 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  const { error } = schemaRegister.validate(req.body)
+  // const { error } = schemaRegister.validate(req.body)
 
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message })
-  }
+  // if (error) {
+  //   return res.status(400).json({ error: error.details[0].message })
+  // }
 
   const { cc, name, email, phone } = req.body
 
