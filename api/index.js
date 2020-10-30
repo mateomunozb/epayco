@@ -1,10 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 //Initializations
 const app = express()
-const PORT = process.env.PORT || 9000
+const PORT = process.env.PORT || 3001
 const authRoutes = require('./routes/auth')
 const verifyToken = require('./routes/validate-token')
 const profile = require('./routes/profile')
@@ -16,6 +17,7 @@ app.use(cors())
 ////Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 //Routes
 app.use('/api/user', authRoutes)
