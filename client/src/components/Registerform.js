@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './style.css'
+import './styleform.css'
+import { axios } from '../axios'
 
 const RegisterForm = () => {
+  const [registerData, setRegisterData] = useState({})
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value })
+  }
+
+  const addUser = async () => {
+    try {
+      const response = await axios.post('/user/register', registerData)
+      console.log('TLC: addUser -> response', response)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
   return (
     <div className='row justify-content-center'>
       <div className='col-sm-6'>
@@ -19,6 +36,7 @@ const RegisterForm = () => {
                   id='cc'
                   placeholder='Numero Documento'
                   name='cc'
+                  onChange={handleChange}
                 />
               </div>
               <div className='form-group pb-4'>
@@ -28,6 +46,7 @@ const RegisterForm = () => {
                   id='name'
                   placeholder='Nombre completo'
                   name='name'
+                  onChange={handleChange}
                 />
               </div>
               <div className='form-group pb-4'>
@@ -37,6 +56,7 @@ const RegisterForm = () => {
                   id='email'
                   placeholder='Email'
                   name='email'
+                  onChange={handleChange}
                 />
               </div>
               <div className='form-group pb-4'>
@@ -46,6 +66,7 @@ const RegisterForm = () => {
                   id='phone'
                   placeholder='Teléfono'
                   name='phone'
+                  onChange={handleChange}
                 />
               </div>
               <div className='form-group pb-4'>
@@ -55,13 +76,15 @@ const RegisterForm = () => {
                   id='password'
                   placeholder='Contraseña'
                   name='password'
+                  onChange={handleChange}
                 />
               </div>
 
               <div className='row justify-content-center'>
                 <button
-                  type='submit'
-                  className='mt-3 p-2 col-sm-10 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
+                  onClick={addUser}
+                  type='button'
+                  className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
                   Registrarse
                 </button>
                 <span className='pt-5'>
