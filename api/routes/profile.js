@@ -5,9 +5,7 @@ router.get('/', async (req, res) => {
   const user = await User.findById({ _id: req.user.id })
 
   res.json({
-    data: {
-      user,
-    },
+    user,
   })
 })
 
