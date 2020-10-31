@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import './style.css'
+import './styleform.css'
 import { axios } from '../axios'
-import NoticeBadge from './Noticebadge'
 // import axios from 'axios'
+import NoticeBadge from './Noticebadge'
 
 const LoginForm = (props) => {
   const [loginData, setLoginData] = useState({ cc: '', password: '' })
-  const [auth, setAuth] = useState(false)
+  const [token, setToken] = useState(null)
   const [errorForm, setErrorForm] = useState(null)
-  console.log('TLC: LoginForm -> errorForm', errorForm)
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -18,15 +17,13 @@ const LoginForm = (props) => {
 
   const loginUser = async () => {
     try {
-      const { data } = await axios.post('/user/login', loginData)
-      console.log('TLC: loginUser -> response', data)
-      setAuth(data.auth)
-      if (props.onChange || auth) {
+      const { data } = await axios.post(`/user/login`, loginData)
+      setToken(data.token)
+      if (props.onChange || token) {
         props.onChange(data)
       }
     } catch (error) {
       setErrorForm(error.response.data.message)
-      console.log(error.response)
     }
   }
 
@@ -70,7 +67,7 @@ const LoginForm = (props) => {
                   className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
                   Ingresar
                 </button>
-                {auth ? <Redirect to='/profile' /> : null}
+                {token ? <Redirect to='/profile' /> : null}
                 <span className='pt-5'>
                   Si no tienes una cuenta{' '}
                   <Link className='text-white font-weight-bold' to='/register'>

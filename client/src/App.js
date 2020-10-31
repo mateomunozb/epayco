@@ -10,17 +10,21 @@ function App() {
   const [profileAccess, setProfileAccess] = useState(false)
 
   const eventhandler = (data) => {
-    if (data.auth) {
-      setProfileAccess(data.auth)
+    if (data.token) {
+      setProfileAccess(data.token)
     }
   }
 
   return (
     <Router>
-      <div className='container'>
+      <div className='container content'>
         <Route exact path='/' component={() => <LoginForm onChange={eventhandler} />} />
         <Route exact path='/register' component={RegisterForm} />
-        {profileAccess ? <Route exact path='/profile' component={Profile} /> : <Redirect to='/' />}
+        {profileAccess ? (
+          <Route exact path='/profile' component={() => <Profile token={profileAccess} />} />
+        ) : (
+          <Redirect to='/' />
+        )}
       </div>
     </Router>
   )
