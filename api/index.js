@@ -1,7 +1,6 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
 
 //Initializations
 const app = express()
@@ -17,7 +16,6 @@ app.use(cors())
 ////Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(cookieParser())
 
 //Routes
 app.use('/api/user', authRoutes)

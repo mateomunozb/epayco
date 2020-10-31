@@ -1,11 +1,12 @@
 const router = require('express').Router()
+const User = require('../database/db')
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const user = await User.findById({ _id: req.user.id })
+
   res.json({
-    error: null,
     data: {
-      title: 'Ruta protegida',
-      user: req.user,
+      user,
     },
   })
 })

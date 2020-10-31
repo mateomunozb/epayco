@@ -24,8 +24,6 @@ router.post('/login', async (req, res) => {
     }
   )
 
-  res.cookie('token', token, { httpOnly: true }, { maxAge: 60 * 60 })
-
   res.json({
     auth: true,
     token,
@@ -65,7 +63,6 @@ router.post('/register', async (req, res) => {
       expiresIn: 60 * 60,
     }
   )
-  res.cookie('token', token, { httpOnly: true }, { maxAge: 60 * 60 })
   try {
     const userDB = await user.save()
     res.json({
