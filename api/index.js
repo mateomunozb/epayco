@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001
 const authRoutes = require('./routes/auth')
 const verifyToken = require('./routes/validate-token')
 const profile = require('./routes/profile')
+const productRoute = require('./routes/products')
 
 //Cors
 const cors = require('cors')
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 //Routes
 app.use('/api/user', authRoutes)
 app.use('/api/profile', verifyToken, profile)
+app.use('/api/profile', verifyToken, productRoute)
 app.get('/api', (req, res) => {
   res.json({
     estado: true,

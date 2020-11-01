@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
   cc: {
-    type: Number,
+    type: String,
     required: true,
-    min: 10000000,
-    max: 9999999999,
+    min: 8,
+    max: 10,
   },
   name: {
     type: String,
@@ -20,10 +20,10 @@ const userSchema = mongoose.Schema({
     max: 255,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
-    min: 1000000,
-    max: 9999999999,
+    min: 7,
+    max: 10,
   },
   password: {
     type: String,
@@ -31,6 +31,7 @@ const userSchema = mongoose.Schema({
     min: 3,
     max: 255,
   },
+  products: [{}],
 })
 
 module.exports = userSchema

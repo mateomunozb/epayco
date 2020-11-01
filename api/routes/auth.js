@@ -2,17 +2,23 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-const User = require('../database/db')
-const { schemaRegister, schemaLogin } = require('../database/models/validate')
+const { User } = require('../database/db')
+// const { schemaRegister } = require('../database/models/validate')
 
 router.post('/login', async (req, res) => {
   const user = await User.findOne({ cc: req.body.cc })
   if (!user)
-    res.status(400).json({ auth: false, message: 'Número de documento o contraseña incorrectos' })
+    res.status(400).json({
+      auth: false,
+      message: 'Número de documento o contraseña incorrectos',
+    })
 
   const validPassword = await bcrypt.compare(req.body.password, user.password)
   if (!validPassword)
-    res.status(400).json({ auth: false, message: 'Número de documento o contraseña incorrectos' })
+    res.status(400).json({
+      auth: false,
+      message: 'Número de documento o contraseña incorrectos',
+    })
 
   const token = jwt.sign(
     {
@@ -41,8 +47,12 @@ router.post('/register', async (req, res) => {
 
   const emailExist = await User.findOne({ email })
   const ccExist = await User.findOne({ cc })
-  if (emailExist) return res.status(400).json({ error: true, message: 'email already exists' })
-  if (ccExist) return res.status(400).json({ error: true, message: 'cc already exists' })
+  if (emailExist)
+    return res
+      .status(400)
+      .json({ error: true, message: 'email already exists' })
+  if (ccExist)
+    return res.status(400).json({ error: true, message: 'cc already exists' })
 
   const password = await bcrypt.hash(req.body.password, 10)
 
