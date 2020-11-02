@@ -18,10 +18,22 @@ function App() {
   return (
     <Router>
       <div className='container content'>
-        <Route exact path='/' component={() => <LoginForm onChange={eventhandler} />} />
-        <Route exact path='/register' component={RegisterForm} />
+        <Route
+          exact
+          path='/'
+          component={() => <LoginForm onChange={eventhandler} />}
+        />
+        <Route
+          exact
+          path='/register'
+          component={() => <RegisterForm onChange={eventhandler} />}
+        />
         {profileAccess ? (
-          <Route exact path='/profile' component={() => <Profile token={profileAccess} />} />
+          <Route
+            exact
+            path='/profile'
+            component={() => <Profile token={profileAccess} />}
+          />
         ) : (
           <Redirect to='/' />
         )}

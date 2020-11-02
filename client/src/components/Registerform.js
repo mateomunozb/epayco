@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import './styleform.css'
 import { axios } from '../axios'
+import NoticeBadge from './Noticebadge'
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
   const [registerData, setRegisterData] = useState({})
+  const [token, setToken] = useState(null)
+  const [errorForm, setErrorForm] = useState(null)
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -13,10 +16,17 @@ const RegisterForm = () => {
 
   const addUser = async () => {
     try {
-      const response = await axios.post('/user/register', registerData)
-      console.log('TLC: addUser -> response', response)
+      const { data } = await axios.post('/user/register', registerData)
+      setToken(data.token)
+      if (props.onChange || token) {
+        props.onChange(data)
+      }
     } catch (error) {
-      console.log(error.response)
+      setErrorForm(error.response.data.error)
+      console.log(
+        'TLC: addUser -> error.response.data',
+        error.response.data.error
+      )
     }
   }
 
@@ -28,6 +38,9 @@ const RegisterForm = () => {
             <h1 className='text-center pt-3 pb-5 text-white'>
               <span className='fas fa-user-plus'></span> Registrarse
             </h1>
+            <div className='row justify-content-center p-2'>
+              {errorForm ? <NoticeBadge notice={errorForm} /> : null}
+            </div>
             <form>
               <div className='form-group pb-4'>
                 <input
@@ -84,9 +97,11 @@ const RegisterForm = () => {
                 <button
                   onClick={addUser}
                   type='button'
-                  className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
+                  className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '
+                >
                   Registrarse
                 </button>
+                {token ? <Redirect to='/profile' /> : null}
                 <span className='pt-5'>
                   Si ya tienes una cuenta{' '}
                   <Link className='text-white font-weight-bold' to='/'>
