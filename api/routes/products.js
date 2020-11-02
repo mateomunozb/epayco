@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { Product, User } = require('../database/db')
 
 router.post('/products', async (req, res) => {
-  const user = await User.findById({ _id: req.user.id })
+  const user = await User.findById({ _id: req.user.id }, { password: 0 })
 
   const { productName, description, subtotal, descuento } = req.body
 
