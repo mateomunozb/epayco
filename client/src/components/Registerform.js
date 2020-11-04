@@ -21,7 +21,6 @@ const RegisterForm = (props) => {
       setToken(data.token)
     } catch (error) {
       setErrorForm(error.response.data.error)
-      console.log('TLC: addUser -> error.response.data', error.response.data.error)
     }
   }
 

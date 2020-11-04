@@ -60,7 +60,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <ProductList />
+        <ProductList products={userData.products} />
       </div>
     </div>
   )

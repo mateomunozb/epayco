@@ -22,14 +22,10 @@ const Product = (props) => {
   }
 
   const addProduct = async () => {
-    console.log('TLC: Product -> productData', productData)
-
     try {
       const { data } = await axios.post(`/profile/products`, productData, { headers: { token } })
       setErrorForm(data.message)
-      console.log('TLC: Product -> message', data.message)
     } catch (error) {
-      console.log('TLC: Product -> error', error.response)
       setErrorForm(error.response.data.error)
     }
   }
