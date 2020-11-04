@@ -47,8 +47,8 @@ router.post('/register', async (req, res) => {
 
   const emailExist = await User.findOne({ email })
   const ccExist = await User.findOne({ cc })
-  if (emailExist) return res.status(400).json({ error: true, message: 'email already exists' })
-  if (ccExist) return res.status(400).json({ error: true, message: 'cc already exists' })
+  if (emailExist) return res.status(400).json({ error: 'Email ya existe' })
+  if (ccExist) return res.status(400).json({ error: 'Numero de documento ya existe' })
 
   const password = await bcrypt.hash(req.body.password, 10)
 
