@@ -38,4 +38,17 @@ const schemaRegister = Joi.object({
   }),
 })
 
-module.exports = schemaRegister
+const schemaProduct = Joi.object({
+  productName: Joi.string().required().messages({
+    'string.empty': `Nombre de producto requerido`,
+    'any.required': `Nombre de producto requerido`,
+  }),
+  description: Joi.string().allow('').optional(),
+  subtotal: Joi.string().required().allow('').messages({
+    'string.empty': `Valor de producto requerido`,
+    'any.required': `Nombre de producto requerido`,
+  }),
+  descuento: Joi.optional(),
+})
+
+module.exports = { schemaRegister, schemaProduct }

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const { User } = require('../database/db')
-const schemaRegister = require('../database/models/validate')
+const { schemaRegister } = require('../database/models/validate')
 
 router.post('/login', async (req, res) => {
   const user = await User.findOne({ cc: req.body.cc })
@@ -47,12 +47,8 @@ router.post('/register', async (req, res) => {
 
   const emailExist = await User.findOne({ email })
   const ccExist = await User.findOne({ cc })
-  if (emailExist)
-    return res
-      .status(400)
-      .json({ error: true, message: 'email already exists' })
-  if (ccExist)
-    return res.status(400).json({ error: true, message: 'cc already exists' })
+  if (emailExist) return res.status(400).json({ error: true, message: 'email already exists' })
+  if (ccExist) return res.status(400).json({ error: true, message: 'cc already exists' })
 
   const password = await bcrypt.hash(req.body.password, 10)
 
