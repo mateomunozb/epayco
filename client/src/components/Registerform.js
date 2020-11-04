@@ -94,7 +94,7 @@ const RegisterForm = (props) => {
                   className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
                   Registrarse
                 </button>
-                {token ? <Redirect to='/profile' /> : null}
+                {token ? <Redirect to='/' /> : null}
                 <span className='pt-5'>
                   Si ya tienes una cuenta{' '}
                   <Link className='text-white font-weight-bold' to='/'>

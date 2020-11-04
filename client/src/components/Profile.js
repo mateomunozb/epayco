@@ -56,7 +56,6 @@ const Profile = () => {
               <Link to='#' className='btn btn-dark' onClick={() => setShowProductForm(true)}>
                 Generar Factura
               </Link>
-              <h3>Saldo: $0.00</h3>
             </div>
           </div>
         </div>
