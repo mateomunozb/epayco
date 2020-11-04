@@ -17,16 +17,11 @@ const RegisterForm = (props) => {
   const addUser = async () => {
     try {
       const { data } = await axios.post('/user/register', registerData)
+      sessionStorage.setItem('token', data.token)
       setToken(data.token)
-      if (props.onChange || token) {
-        props.onChange(data)
-      }
     } catch (error) {
       setErrorForm(error.response.data.error)
-      console.log(
-        'TLC: addUser -> error.response.data',
-        error.response.data.error
-      )
+      console.log('TLC: addUser -> error.response.data', error.response.data.error)
     }
   }
 
@@ -97,8 +92,7 @@ const RegisterForm = (props) => {
                 <button
                   onClick={addUser}
                   type='button'
-                  className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '
-                >
+                  className='mt-3 p-2 col-sm-8 btn btn-lg btn-outline text-white shadow-lg rounded-pill '>
                   Registrarse
                 </button>
                 {token ? <Redirect to='/profile' /> : null}

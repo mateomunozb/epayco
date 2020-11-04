@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import './styleform.css'
 import { axios } from '../axios'
-// import axios from 'axios'
 import NoticeBadge from './Noticebadge'
 
 const LoginForm = (props) => {
-  const [loginData, setLoginData] = useState({ cc: '', password: '' })
+  const [loginData, setLoginData] = useState({})
   const [token, setToken] = useState(null)
   const [errorForm, setErrorForm] = useState(null)
 
@@ -18,10 +17,8 @@ const LoginForm = (props) => {
   const loginUser = async () => {
     try {
       const { data } = await axios.post(`/user/login`, loginData)
+      sessionStorage.setItem('token', data.token)
       setToken(data.token)
-      if (props.onChange || token) {
-        props.onChange(data)
-      }
     } catch (error) {
       setErrorForm(error.response.data.message)
     }
