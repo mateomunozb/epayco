@@ -1,0 +1,18 @@
+.product-content {
+  position: absolute;
+  display: block;
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.form-product::placeholder {
+  color: black;
+}
+
+textarea {
+  max-height: 150px;
+  min-height: 30px;
+}
